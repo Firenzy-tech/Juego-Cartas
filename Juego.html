@@ -1,0 +1,81 @@
+<html>
+
+    <head>
+        <title>Juego del Apuntado</title>
+        <script src="codigo/Carta.js"></script>
+    </head>
+    
+    <body>
+        <div style="position: absolute; top: 0;right: 0;bottom: 0;left: 0; text-align:center;">
+            <br>
+            <br>
+            Juego de Cartas
+        </div>
+        <div style="position: absolute; top: 100;right: 0;bottom: 0;left: 0; text-align:center;">
+            <button onclick="repartir();">
+                <img src="imagenes/Repartir.png">
+            </button>
+            <button onclick="verificar();">
+                <img src="imagenes/Verificar.png">
+            </button>
+        </div>
+    
+        <div id="mesa" style="position: absolute; top: 200;right: 0;bottom: 0;left: 0; text-align:center;">
+    
+        </div>
+    
+        <script>
+            //variable global que almacena la lista de cartas a repartir
+            var cartas = [];
+    
+            function repartir() {
+                cartas = [];
+                var div = document.getElementById("mesa");
+                div.innerHTML = "";
+                for (var i = 0; i < 10; i++) {
+                    cartas[i] = new Carta();
+                    var img = document.createElement("img");
+                    img.src = cartas[i].imagen();
+                    div.appendChild(img);
+                }
+    
+            }
+    
+            function verificar() {
+                //declarar los contadores
+                var contadores = [];
+                for (var i = 0; i < 13; i++) {
+                    contadores[i] = 0;
+                }
+    
+                //recorrer las cartas
+                for (var i = 0; i < cartas.length; i++) {
+                    contadores[cartas[i].obtenerIndiceNombre()]++;
+                }
+    
+                //Declarar los nombres de las figuras y las cartas
+                var figura = ["Par", "Terna", "Cuarta", "Quinta",
+                    "Sexta", "Septima", "Octava", "Novena", "Decima"];
+    
+                var nombre = ["As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
+    
+                var figuras = "No hay figuras\n";
+    
+                //recorrer los contadores para vefificar las figuras
+                for (var i = 0; i < 13; i++) {
+                    if (contadores[i] >= 3) {
+                        //Verificar si es la primer figura
+                        if (figuras.includes("No hay")) {
+                            figuras = "Se encontraron las siguientes figuras:\n";
+                        }
+                        figuras += figura[contadores[i] - 2] + " de " + nombre[i] + "\n";
+                    }
+                }
+                window.alert(figuras);
+            }
+    
+        </script>
+    </body>
+    
+    
+</html>
